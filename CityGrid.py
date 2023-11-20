@@ -159,7 +159,7 @@ class CityGrid:
             return "left"
 
     def optimize_towers(self, radius, example=False):
-        if not self.free_blocks or len(self.towers_graph.keys()) * self.tower_price >= self.budget:
+        if not self.free_blocks or len(self.towers_graph.keys()) * self.tower_price + self.tower_price >= self.budget:
             return
         else:
             square = (radius * 2 + 1) ** 2
@@ -220,8 +220,8 @@ class CityGrid:
         return abs(x2 - x1) + abs(y2 - y1)
 
 
-def example_1(n, m, percent_blocked_blocks):
-    city = CityGrid(n, m, percent_blocked_blocks, budget=1000, tower_price=50)
+def example_1(n, m, percent_blocked_blocks, budget, tower_price):
+    city = CityGrid(n, m, percent_blocked_blocks, budget=budget, tower_price=tower_price)
     city.visual_example(1)
     return city
 
@@ -244,9 +244,9 @@ def example_4(city, first_tower=None, second_tower=None):
     city.visual_example(4, city.a_star(first_tower, second_tower))
 
 
-city = example_1(n=10, m=10, percent_blocked_blocks=20)
-city = example_2(city, radius=2)
-city = example_3(city, radius=2)
+city = example_1(n=10, m=10, percent_blocked_blocks=40, budget=340, tower_price=54)
+city = example_2(city, radius=1)
+city = example_3(city, radius=1)
 
 first_tower, second_tower = None, None
 while True:
